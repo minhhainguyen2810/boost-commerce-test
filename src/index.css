@@ -1,13 +1,78 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+.tooltip-popover {
+  width: 300px;
+  font-weight: bold;
+  border-radius: 4px;
+  border: 1px solid #98a04d;
+  display: none;
+
+  background: #e5e5e5;
+  color: #3d3d3d;
+}
+
+.tooltip-popover[data-show] {
+  display: block;
+}
+
+#arrow,
+#arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #98a04d;
+}
+
+#arrow {
+  visibility: hidden;
+}
+
+#arrow::before {
+  visibility: visible;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.tooltip-popover[data-popper-placement^="top"] > #arrow {
+  bottom: -4px;
+}
+
+.tooltip-popover[data-popper-placement^="bottom"] > #arrow {
+  top: -4px;
+}
+
+.tooltip-popover[data-popper-placement^="left"] > #arrow {
+  right: -4px;
+}
+
+.tooltip-popover[data-popper-placement^="right"] > #arrow {
+  left: -4px;
+}
+#popper[data-popper-reference-hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.tooltip-popover[data-show] {
+  display: block;
+}
+
+.background-yellow {
+  background-color: #98a04d;
+}
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
