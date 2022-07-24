@@ -6,7 +6,10 @@ import { useDispatch } from "react-redux";
 import { changeSearchValue } from "./app/slice";
 import { debounce } from "lodash";
 
-const input = document.getElementById("test");
+const input = document.getElementById("boost-search");
+
+const config = (window as any).boostCommerce;
+const charactersLengthToSearch = config.charactersLengthToSearch || 0;
 
 function App() {
   // const [referenceElement, setReferenceElement] =
@@ -28,7 +31,6 @@ function App() {
   });
 
   const show = () => {
-    console.log("show", popperElement);
     if (!popperElement) return;
 
     popperElement.setAttribute("data-show", "");
@@ -42,16 +44,30 @@ function App() {
 
     update?.();
   };
-  const change = (e: any) => {
-    console.log(e.target.value);
 
-    dispatch(changeSearchValue(e.target.value));
-  };
+  const change = debounce(
+    (e: any) => {
+      if (e.target.value.length >= charactersLengthToSearch) {
+        show();
+        dispatch(changeSearchValue(e.target.value));
+      } else {
+        hide();
+      }
+    },
+    200,
+    { trailing: true }
+  );
   useEffect(() => {
     if (!input) return;
-    input?.addEventListener("focus", show);
+    // input?.addEventListener("focus", show);
     input?.addEventListener("blur", hide);
     input?.addEventListener("input", change);
+
+    return function cleanup() {
+      // input?.removeEventListener("focus", show);
+      input?.removeEventListener("blur", hide);
+      input?.removeEventListener("input", change);
+    };
   }, [change, hide, show]);
 
   return (
