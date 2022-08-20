@@ -36,14 +36,14 @@ function App() {
     popperElement.setAttribute("data-show", "");
 
     update?.();
-  }, []);
+  }, [popperElement, update]);
 
   const hide = useCallback(() => {
     if (!popperElement) return;
     popperElement.removeAttribute("data-show");
 
     update?.();
-  }, []);
+  }, [popperElement, update]);
 
   const change = debounce(
     (e: any) => {
