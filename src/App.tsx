@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePopper } from "react-popper";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Popup from "./Popup";
@@ -30,20 +30,20 @@ function App() {
     ],
   });
 
-  const show = () => {
+  const show = useCallback(() => {
     if (!popperElement) return;
 
     popperElement.setAttribute("data-show", "");
 
     update?.();
-  };
+  }, []);
 
-  const hide = () => {
+  const hide = useCallback(() => {
     if (!popperElement) return;
     popperElement.removeAttribute("data-show");
 
     update?.();
-  };
+  }, []);
 
   const change = debounce(
     (e: any) => {
